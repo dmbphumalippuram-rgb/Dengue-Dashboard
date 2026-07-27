@@ -7,7 +7,7 @@ from shapely.geometry import Point, MultiPoint
 from shapely.ops import voronoi_diagram
 
 # ==============================================================================
-# 1. PAGE CONFIGURATION & INTERFACE PROTECTION (HIDES GITHUB & FORK)
+# 1. PAGE CONFIGURATION & INTERFACE PROTECTION
 # ==============================================================================
 st.set_page_config(
     page_title="Confirmed Dengue Surveillance Intelligence",
@@ -16,29 +16,38 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS: Hides ONLY GitHub/Fork toolbar while keeping the sidebar expand button working
+# Custom CSS: Hides ONLY GitHub/Fork/Deploy/Menu icons while preserving the sidebar expand button (>)
 st.markdown("""
     <style>
-        /* Hide top-right toolbar (GitHub icon, Fork button, etc.) */
+        /* 1. Hide GitHub, Fork, and Deploy Action Buttons */
+        [data-testid="stAppDeployButton"],
+        [data-testid="stActionButton"],
         div[data-testid="stToolbar"] {
             display: none !important;
         }
         
-        /* Hide main menu dots and footer */
-        #MainMenu {
-            display: none !important;
-        }
+        /* 2. Hide Main Menu (3 dots) and Streamlit Footer */
+        #MainMenu,
+        [data-testid="stMainMenu"],
         footer {
             display: none !important;
         }
         
-        /* Keep header transparent so the sidebar toggle arrow stays visible & clickable */
+        /* 3. Keep Header transparent so sidebar toggle button (>) stays visible and clickable */
         header[data-testid="stHeader"] {
             background-color: transparent !important;
-            z-index: 1000 !important;
+            z-index: 9999 !important;
         }
-        
-        /* Page styling */
+
+        /* Ensure the sidebar collapse/expand toggle button is always visible */
+        [data-testid="stSidebarCollapseButton"],
+        button[aria-label="Expand sidebar"],
+        button[aria-label="Collapse sidebar"] {
+            visibility: visible !important;
+            display: block !important;
+        }
+
+        /* 4. Dashboard Styling */
         .main { background-color: #f8f9fa; }
         
         [data-testid="stMetricValue"] {
@@ -54,7 +63,7 @@ st.markdown("""
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         
-        /* Header Banner */
+        /* Header Banner Styling */
         .header-container {
             background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
             padding: 24px;
@@ -142,7 +151,6 @@ map_style = st.sidebar.selectbox(
     index=0
 )
 
-# Higher threshold slider suitable for larger Dengue case counts
 hotspot_threshold = st.sidebar.slider(
     "Hotspot Outbreak Threshold",
     min_value=5,
@@ -215,7 +223,7 @@ with left_col:
         )
     )
 
-    # Hotspot Circles (Radius scales dynamically based on infection severity)
+    # Hotspot Circles
     for _, row in gdf_merged.iterrows():
         lat = row['centroid_lat']
         lon = row['centroid_lon']
@@ -228,7 +236,7 @@ with left_col:
         
         folium.CircleMarker(
             location=[lat, lon],
-            radius=4 + (cases * 0.18),  # Scaled to accommodate higher Dengue case counts cleanly
+            radius=4 + (cases * 0.18),
             color=color_code,
             fill=True,
             fill_color=fill_code,

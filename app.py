@@ -15,71 +15,32 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-# Custom CSS: Hides top-right toolbar & forces the sidebar expand button (>) to float visibly in the top-left
 st.markdown("""
-<style>
-
-/* ============================
-   Hide ONLY Streamlit Toolbar
-   ============================ */
-
-[data-testid="stToolbar"]{
-    display:none !important;
-}
-
-[data-testid="stHeaderActionElements"]{
-    display:none !important;
-}
-
-#MainMenu{
-    visibility:hidden !important;
-}
-
-footer{
-    visibility:hidden !important;
-}
-
-/* Keep the header visible so the sidebar toggle works */
-header[data-testid="stHeader"]{
-    background:transparent !important;
-}
-
-/* Optional: hide "Made with Streamlit" badge */
-[data-testid="stDecoration"]{
-    display:none !important;
-}
-
-/* Metric cards */
-div[data-testid="metric-container"]{
-    background:#fff;
-    border:1px solid #e2e8f0;
-    padding:15px;
-    border-radius:12px;
-}
-
-[data-testid="stMetricValue"]{
-    font-size:28px !important;
-    font-weight:700;
-}
-
-.header-container{
-    background:linear-gradient(135deg,#1e1b4b,#4338ca);
-    padding:24px;
-    border-radius:14px;
-    color:white;
-    margin-bottom:20px;
-}
-
-.header-title{
-    font-size:30px;
-    font-weight:800;
-}
-
-.header-subtitle{
-    color:#c7d2fe;
-}
-
-</style>
+    <style>
+        .main { background-color: #f8f9fa; }
+        [data-testid="stMetricValue"] {
+            font-size: 28px !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+        }
+        div[data-testid="metric-container"] {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .header-container {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            padding: 24px;
+            border-radius: 14px;
+            color: white;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        .header-title { font-size: 30px; font-weight: 800; margin: 0; }
+        .header-subtitle { font-size: 15px; color: #93c5fd; margin-top: 5px; }
+    </style>
 """, unsafe_allow_html=True)
 # ==============================================================================
 # 2. CONFIRMED DENGUE DATA & AUTOMATIC BOUNDARY GENERATOR

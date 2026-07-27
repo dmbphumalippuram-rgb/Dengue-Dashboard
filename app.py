@@ -16,40 +16,37 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS: Hides ONLY GitHub/Fork/Deploy/Menu icons while preserving the sidebar expand button (>)
+# Custom CSS: Hides GitHub/Fork/Menu toolbar while preserving the sidebar toggle arrow (>)
 st.markdown("""
     <style>
-        /* 1. Hide GitHub, Fork, and Deploy Action Buttons */
-        [data-testid="stAppDeployButton"],
-        [data-testid="stActionButton"],
-        div[data-testid="stToolbar"] {
-            display: none !important;
-        }
-        
-        /* 2. Hide Main Menu (3 dots) and Streamlit Footer */
+        /* 1. Hide ONLY the top-right actions (GitHub, Fork, Deploy, Menu) & Footer */
+        [data-testid="stToolbar"],
+        [data-testid="stHeaderActionElements"],
+        #GithubIcon,
         #MainMenu,
-        [data-testid="stMainMenu"],
         footer {
             display: none !important;
+            visibility: hidden !important;
         }
-        
-        /* 3. Keep Header transparent so sidebar toggle button (>) stays visible and clickable */
+
+        /* 2. Keep the top header bar transparent so it doesn't block mouse clicks */
         header[data-testid="stHeader"] {
             background-color: transparent !important;
-            z-index: 9999 !important;
+            pointer-events: none !important;
         }
 
-        /* Ensure the sidebar collapse/expand toggle button is always visible */
-        [data-testid="stSidebarCollapseButton"],
-        button[aria-label="Expand sidebar"],
-        button[aria-label="Collapse sidebar"] {
+        /* 3. Re-enable click events & force visibility for the Sidebar Toggle Button (>) */
+        [data-testid="stSidebarCollapsedControl"],
+        [data-testid="stSidebarCollapseButton"] {
+            display: flex !important;
             visibility: visible !important;
-            display: block !important;
+            pointer-events: auto !important;
+            z-index: 999999 !important;
         }
 
-        /* 4. Dashboard Styling */
+        /* 4. Page Styling */
         .main { background-color: #f8f9fa; }
-        
+
         [data-testid="stMetricValue"] {
             font-size: 28px !important;
             font-weight: 700 !important;
@@ -62,7 +59,7 @@ st.markdown("""
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
-        
+
         /* Header Banner Styling */
         .header-container {
             background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
@@ -76,7 +73,6 @@ st.markdown("""
         .header-subtitle { font-size: 15px; color: #c7d2fe; margin-top: 5px; }
     </style>
 """, unsafe_allow_html=True)
-
 # Custom Header Banner
 st.markdown("""
     <div class="header-container">

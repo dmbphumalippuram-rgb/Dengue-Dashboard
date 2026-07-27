@@ -15,11 +15,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Custom CSS: Hides GitHub/Fork/Menu toolbar while preserving the sidebar toggle arrow (>)
+# Custom CSS: Hides top-right toolbar & forces the sidebar expand button (>) to float visibly in the top-left
 st.markdown("""
     <style>
-        /* 1. Hide ONLY the top-right actions (GitHub, Fork, Deploy, Menu) & Footer */
+        /* 1. Hide top-right action buttons (GitHub, Fork, Deploy, 3 Dots) & Footer */
         [data-testid="stToolbar"],
         [data-testid="stHeaderActionElements"],
         #GithubIcon,
@@ -29,22 +28,33 @@ st.markdown("""
             visibility: hidden !important;
         }
 
-        /* 2. Keep the top header bar transparent so it doesn't block mouse clicks */
+        /* 2. Transparent header so it won't block interactions */
         header[data-testid="stHeader"] {
             background-color: transparent !important;
-            pointer-events: none !important;
+            height: 0px !important;
         }
 
-        /* 3. Re-enable click events & force visibility for the Sidebar Toggle Button (>) */
-        [data-testid="stSidebarCollapsedControl"],
-        [data-testid="stSidebarCollapseButton"] {
+        /* 3. Force the Top-Left Sidebar Expand Button (>) to float visibly */
+        [data-testid="stSidebarCollapsedControl"] {
             display: flex !important;
             visibility: visible !important;
-            pointer-events: auto !important;
+            position: fixed !important;
+            top: 12px !important;
+            left: 12px !important;
             z-index: 999999 !important;
+            background-color: #4338ca !important; /* Visible indigo background button */
+            border-radius: 8px !important;
+            padding: 4px !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
         }
 
-        /* 4. Page Styling */
+        /* Make the arrow icon inside bright white */
+        [data-testid="stSidebarCollapsedControl"] svg {
+            fill: #ffffff !important;
+            color: #ffffff !important;
+        }
+
+        /* 4. Page & Metric Styling */
         .main { background-color: #f8f9fa; }
 
         [data-testid="stMetricValue"] {
@@ -68,19 +78,12 @@ st.markdown("""
             color: white;
             margin-bottom: 25px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
         }
         .header-title { font-size: 30px; font-weight: 800; margin: 0; }
         .header-subtitle { font-size: 15px; color: #c7d2fe; margin-top: 5px; }
     </style>
 """, unsafe_allow_html=True)
-# Custom Header Banner
-st.markdown("""
-    <div class="header-container">
-        <div class="header-title">🦟 Confirmed Dengue Epidemiological Tracker</div>
-        <div class="header-subtitle">Ernakulam District • Real-Time Spatial Risk Analysis & Outbreak Monitoring</div>
-    </div>
-""", unsafe_allow_html=True)
-
 # ==============================================================================
 # 2. CONFIRMED DENGUE DATA & AUTOMATIC BOUNDARY GENERATOR
 # ==============================================================================

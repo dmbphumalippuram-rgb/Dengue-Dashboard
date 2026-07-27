@@ -16,26 +16,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS: Injects styling AND completely hides GitHub icon, Fork menu, & headers
+# Custom CSS: Hides ONLY GitHub/Fork toolbar while keeping the sidebar expand button working
 st.markdown("""
     <style>
-        /* 1. Hide Streamlit Top Bar, GitHub Icon, & Fork Menu */
-        header[data-testid="stHeader"] {
-            visibility: hidden !important;
-            height: 0px !important;
-        }
+        /* Hide top-right toolbar (GitHub icon, Fork button, etc.) */
         div[data-testid="stToolbar"] {
-            visibility: hidden !important;
-            height: 0px !important;
-        }
-        #MainMenu {
-            visibility: hidden !important;
-        }
-        footer {
-            visibility: hidden !important;
+            display: none !important;
         }
         
-        /* 2. Page Styling */
+        /* Hide main menu dots and footer */
+        #MainMenu {
+            display: none !important;
+        }
+        footer {
+            display: none !important;
+        }
+        
+        /* Keep header transparent so the sidebar toggle arrow stays visible & clickable */
+        header[data-testid="stHeader"] {
+            background-color: transparent !important;
+            z-index: 1000 !important;
+        }
+        
+        /* Page styling */
         .main { background-color: #f8f9fa; }
         
         [data-testid="stMetricValue"] {
@@ -51,9 +54,9 @@ st.markdown("""
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         
-        /* 3. Header Banner */
+        /* Header Banner */
         .header-container {
-            background: linear-gradient(135deg, #7c2d12 0%, #b91c1c 100%);
+            background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
             padding: 24px;
             border-radius: 14px;
             color: white;
@@ -61,7 +64,7 @@ st.markdown("""
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
         }
         .header-title { font-size: 30px; font-weight: 800; margin: 0; }
-        .header-subtitle { font-size: 15px; color: #fca5a5; margin-top: 5px; }
+        .header-subtitle { font-size: 15px; color: #c7d2fe; margin-top: 5px; }
     </style>
 """, unsafe_allow_html=True)
 

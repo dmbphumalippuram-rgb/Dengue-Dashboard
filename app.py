@@ -42,6 +42,14 @@ st.markdown("""
         .header-subtitle { font-size: 15px; color: #93c5fd; margin-top: 5px; }
     </style>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="header-container">
+        <div class="header-title">🦟 Confirmed Dengue Surveillance Intelligence </div>
+        <div class="header-subtitle">Ernakulam District • Custom Block Boundaries & Hotspot Analysis</div>
+    </div>
+""", unsafe_allow_html=True)
+
 # ==============================================================================
 # 2. CONFIRMED DENGUE DATA & AUTOMATIC BOUNDARY GENERATOR
 # ==============================================================================
